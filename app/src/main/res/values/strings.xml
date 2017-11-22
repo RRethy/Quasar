@@ -1,3 +1,7 @@
 <resources>
 	<string name="app_name">Quasar</string>
+	<string name="screen_filter">Screen Filter</string>
+	<string name="screen_border">Screen Border</string>
+	<string name="screen_filter_desc">Would You Like To Add A Screen Filter To Protect Your Eyes?</string>
+	<string name="screen_border_desc">Would You Like A Slick Round Border Around Your Screen?</string>
 </resources>
