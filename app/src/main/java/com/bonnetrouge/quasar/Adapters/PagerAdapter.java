@@ -9,11 +9,13 @@ import com.bonnetrouge.quasar.Fragments.FilterFragment;
 
 import java.util.ArrayList;
 
-public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
+
+    private float pageWidth = 0.85f;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
-    public ScreenSlidePagerAdapter(FragmentManager fm) {
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
         fragments.add(new FilterFragment());
         fragments.add(new BorderFragment());
@@ -27,5 +29,10 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return fragments.size();
+    }
+
+    @Override
+    public float getPageWidth(int position) {
+        return pageWidth;
     }
 }

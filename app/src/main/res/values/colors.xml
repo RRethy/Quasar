@@ -8,4 +8,6 @@
 	<color name="colorPrimaryText">#212121</color>
 	<color name="colorDivider">#BDBDBD</color>
 	<color name="colorSecondary">#757575</color>
+	<color name="nice_purple">#9C27B0</color>
+	<color name="nice_light_orange">#FFC107</color>
 </resources>
