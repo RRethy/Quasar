@@ -1,0 +1,5 @@
+<root>
+	<item name='android.arch.lifecycle.ViewModel'>
+		<annotation name='java.lang.Deprecated'/>
+	</item>
+</root>
