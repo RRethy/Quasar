@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.constraint.ConstraintLayout
 	xmlns:tools="http://schemas.android.com/tools"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:background="@color/nice_purple"
 	tools:context="com.bonnetrouge.quasar.MainActivity">
 
-</android.support.design.widget.CoordinatorLayout>
+	<android.support.v7.widget.CardView
+		android:id="@+id/cardView"
+		android:layout_width="200dp"
+		android:layout_height="300dp"
+		android:layout_gravity="center"
+		android:layout_marginBottom="8dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp"
+		android:backgroundTint="@color/nice_light_orange"
+		android:foreground="?android:attr/selectableItemBackground"
+		app:cardCornerRadius="6dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<ImageView
+			android:id="@+id/preview_image"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:layout_margin="8dp"
+			android:background="@android:color/white"
+			app:srcCompat="@drawable/ic_file_upload_black_24dp"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="68dp"
+			android:layout_gravity="bottom"
+			android:layout_margin="8dp"
+			android:fontFamily="cursive"
+			android:gravity="center"
+			android:text="@string/tap_to_upload"
+			android:textColor="@color/nice_purple"
+			android:textSize="22sp"/>
+	</android.support.v7.widget.CardView>
+
+	<Button
+		android:id="@+id/show_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginStart="64dp"
+		android:layout_marginTop="8dp"
+		android:text="@string/start_filter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/hide_button"
+		app:layout_constraintHorizontal_bias="0.207"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.93"/>
+
+	<Button
+		android:id="@+id/hide_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
+		android:layout_marginEnd="64dp"
+		android:layout_marginTop="476dp"
+		android:text="@string/hide_filter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.0"/>
+</android.support.constraint.ConstraintLayout>

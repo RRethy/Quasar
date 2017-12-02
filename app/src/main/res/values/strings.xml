@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">Quasar</string>
 	<string name="accessibility_desc">This is used to automatically disable and enable the overlay appropriately.</string>
+	<string name="tap_to_upload">Tap to Select Pic</string>
+	<string name="start_filter">Show Filter</string>
+	<string name="hide_filter">Hide Filter</string>
 </resources>
