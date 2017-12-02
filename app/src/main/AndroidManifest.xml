@@ -16,6 +16,8 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
+		<service android:name=".Services.OverlayService"/>
+
 		<service android:name=".Services.OverlayAccessibilityService"
 				 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
 			<intent-filter>
