@@ -18,6 +18,8 @@ import com.bonnetrouge.quasar.R;
 
 public class OverlayService extends Service {
 
+    public static final int OVERLAY_REQUEST_CODE = 1815;
+
     private boolean isDisabled = false;
 
     private WindowManager windowManager;

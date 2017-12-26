@@ -1,15 +1,22 @@
 package com.bonnetrouge.quasar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bonnetrouge.quasar.Commons.Utility;
+import com.bonnetrouge.quasar.Services.OverlayAccessibilityService;
+import com.bonnetrouge.quasar.Services.OverlayService;
 
 import java.io.IOException;
 
@@ -22,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.preview_image) ImageView previewImage;
     @BindView(R.id.show_button) Button showButton;
     @BindView(R.id.hide_button) Button hideButton;
+
+    private AlertDialog accessibilityDialog;
+    private AlertDialog overlayDialog;
 
     private Bitmap imgBitmap;
 
@@ -52,8 +62,14 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (requestCode == PICK_IMAGE_REQUEST) {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
+        } else if ((requestCode == OverlayService.OVERLAY_REQUEST_CODE
+                || requestCode == OverlayAccessibilityService.ACCESSIBILITY_REQUEST_CODE)
+                && Settings.canDrawOverlays(MainActivity.this)) {
+            showOverlay();
+        } else if (requestCode == OverlayAccessibilityService.ACCESSIBILITY_REQUEST_CODE) {
+            requestOverlayPermission();
         }
     }
 
@@ -68,10 +84,63 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupButtons() {
         this.showButton.setOnClickListener(view -> {
-            // Show the overlay
+            if (!Utility.isAccessibilityEnabled(getApplicationContext(),
+                    OverlayAccessibilityService.ACCESSIBILITY_ID)) {
+                requestAccessibilityPermission();
+            } else if (!Settings.canDrawOverlays(MainActivity.this)){
+                requestOverlayPermission();
+            } else {
+                showOverlay();
+            }
         });
         this.hideButton.setOnClickListener(view -> {
             // Hide the overlay
         });
+    }
+
+    private void requestAccessibilityPermission() {
+        if (accessibilityDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("TODO")
+                    .setTitle("Auto-Disable");
+            builder.setPositiveButton("enable", (dialog, id) -> {
+                Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                startActivityForResult(intent, OverlayAccessibilityService.ACCESSIBILITY_REQUEST_CODE);
+            });
+            builder.setNegativeButton("no thanks", (dialog, id) -> {
+                dialog.dismiss();
+                if (Settings.canDrawOverlays(MainActivity.this)) {
+                    showOverlay();
+                } else {
+                    requestOverlayPermission();
+                }
+            });
+            accessibilityDialog = builder.create();
+        }
+        accessibilityDialog.show();
+    }
+
+    private void requestOverlayPermission() {
+        if (overlayDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("TODO")
+                    .setTitle("Display Overlay");
+            builder.setPositiveButton("enable", (dialog, id) -> {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" +getApplicationContext().getPackageName()));
+                startActivityForResult(intent, OverlayService.OVERLAY_REQUEST_CODE);
+            });
+            builder.setNegativeButton("no thanks", (dialog, id) -> {
+                dialog.dismiss();
+                Toast.makeText(this, "We require the overlay permission to show the overlay :(", Toast.LENGTH_SHORT).show();
+            });
+            overlayDialog = builder.create();
+        }
+        overlayDialog.show();
+    }
+
+    private void showOverlay() {
+/*        Intent intent = new Intent(MainActivity.this, OverlayService.class);
+        startService(intent);*/
     }
 }

@@ -9,7 +9,7 @@ public class OverlayAccessibilityService extends AccessibilityService {
 
     private static final int EVENT_TYPE_ACTION_WINDOW = 32;
     public static final int ACCESSIBILITY_REQUEST_CODE = 1867;
-    public static final String PACKAGE_NAME = "com.bonnetrouge.quasar.services";
+    public static final String PACKAGE_NAME = "com.bonnetrouge.quasar";
     public static final String ACCESSIBILITY_ID = PACKAGE_NAME + "/.Services.OverlayAccessibilityService";
     public static final String ACTION_DISABLE_FLOATING_VIDEO = "Disable Overlay";
     public static final String ACTION_ENABLE_FLOATING_VIDEO = "Enable Overlay";
