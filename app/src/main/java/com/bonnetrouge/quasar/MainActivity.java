@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         });
         this.hideButton.setOnClickListener(view -> {
             if (this.service != null) {
+                this.service.disable();
                 this.service.hideOverlay();
             }
         });
@@ -162,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, OverlayService.class);
             bindService(intent, this.connection, Context.BIND_AUTO_CREATE);
         } else {
+            this.service.enable();
             this.service.showOverlay();
         }
         updateOverlayImage();

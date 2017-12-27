@@ -24,6 +24,8 @@ public class OverlayService extends Service {
 
     private final IBinder binder = new OverlayBinder();
 
+    private boolean shouldShow = false;
+
     private WindowManager windowManager;
     private ImageView overlay;
     private WindowManager.LayoutParams params;
@@ -94,7 +96,7 @@ public class OverlayService extends Service {
     }
 
     public void showOverlay() {
-        if (!isShowing()) {
+        if (!isShowing() && shouldShow) {
             this.windowManager.addView(this.overlay, this.params);
         }
     }
@@ -103,6 +105,14 @@ public class OverlayService extends Service {
         if (isShowing()) {
             this.windowManager.removeViewImmediate(this.overlay);
         }
+    }
+
+    public void enable() {
+        this.shouldShow = true;
+    }
+
+    public void disable() {
+        this.shouldShow = false;
     }
 
     private void setupBroadcastReceiver() {
