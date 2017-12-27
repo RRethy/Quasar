@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 && resultCode == RESULT_OK
                 && data != null
                 && data.getData() != null) {
+            // They selected an image to use as an overlay
             Uri uri = data.getData();
 
             try {
@@ -75,12 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else if (requestCode == PICK_IMAGE_REQUEST) {
+            // They came back from choosing an image without choosing one
             Toast.makeText(this, R.string.no_image_selected, Toast.LENGTH_SHORT).show();
         } else if ((requestCode == OverlayService.OVERLAY_REQUEST_CODE
                 || requestCode == OverlayAccessibilityService.ACCESSIBILITY_REQUEST_CODE)
                 && Settings.canDrawOverlays(MainActivity.this)) {
+            // They came back from accepting a permission and we have permission to show the overlay
             showOverlay();
         } else if (requestCode == OverlayAccessibilityService.ACCESSIBILITY_REQUEST_CODE) {
+            // They accepted accessibility permission but we still need overlay permission
             requestOverlayPermission();
         }
     }

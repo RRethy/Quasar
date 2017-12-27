@@ -91,9 +91,7 @@ public class OverlayService extends Service {
     }
 
     public void showOverlay() {
-        Log.d("quman", "checking: adding overlay to windowmanager");
         if (!isShowing()) {
-            Log.d("quman", "adding overlay to windowmanager");
             this.windowManager.addView(this.overlay, this.params);
         }
     }
