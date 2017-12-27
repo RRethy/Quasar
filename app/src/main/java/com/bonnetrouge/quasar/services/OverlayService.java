@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.bonnetrouge.quasar.Commons.Utility;
 import com.bonnetrouge.quasar.R;
 
 public class OverlayService extends Service {
@@ -62,7 +61,11 @@ public class OverlayService extends Service {
         }
         windowManager = null;
         if (broadcastReceiver != null) {
-            unregisterReceiver(broadcastReceiver);
+            try {
+                unregisterReceiver(broadcastReceiver);
+            } catch (IllegalArgumentException e) {
+                Log.v(OverlayService.class.getName(), "Accessibility broadcast receiver not registered.");
+            }
         }
     }
 
@@ -103,12 +106,10 @@ public class OverlayService extends Service {
     }
 
     private void setupBroadcastReceiver() {
-        if (Utility.isAccessibilityEnabled(this, OverlayAccessibilityService.ACCESSIBILITY_ID)) {
-            broadcastReceiver = new OverlayBroadcastReceiver();
-            IntentFilter intentFilter = new IntentFilter(OverlayAccessibilityService.ACTION_DISABLE_FLOATING_VIDEO);
-            intentFilter.addAction(OverlayAccessibilityService.ACTION_ENABLE_FLOATING_VIDEO);
-            registerReceiver(broadcastReceiver, intentFilter);
-        }
+        broadcastReceiver = new OverlayBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter(OverlayAccessibilityService.ACTION_DISABLE_FLOATING_VIDEO);
+        intentFilter.addAction(OverlayAccessibilityService.ACTION_ENABLE_FLOATING_VIDEO);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     private boolean isShowing() {

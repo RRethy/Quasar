@@ -7,7 +7,6 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class OverlayAccessibilityService extends AccessibilityService {
 
-    private static final int EVENT_TYPE_ACTION_WINDOW = 32;
     public static final int ACCESSIBILITY_REQUEST_CODE = 1867;
     public static final String PACKAGE_NAME = "com.bonnetrouge.quasar";
     public static final String ACCESSIBILITY_ID = PACKAGE_NAME + "/.services.OverlayAccessibilityService";
@@ -17,7 +16,7 @@ public class OverlayAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
-        if (eventType == EVENT_TYPE_ACTION_WINDOW) {
+        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             try {
                 String packageName = (String) event.getPackageName();
                 String className = (String) event.getClassName();
