@@ -4,4 +4,12 @@
 	<string name="tap_to_upload">Tap to Select Pic</string>
 	<string name="start_filter">Show Filter</string>
 	<string name="hide_filter">Hide Filter</string>
+	<string name="enable">Enable</string>
+	<string name="no_thanks">No Thanks</string>
+	<string name="accessibility_dialog_msg">Would you like us to automatically show and hide the overlay for best user experience?</string>
+	<string name="accessibility_dialog_title">Auto-Hide</string>
+	<string name="overlay_dialog_msg">Please enable us to draw over apps so the overlay can be displayed.</string>
+	<string name="overlay_dialog_title">Display Overlay</string>
+	<string name="overlay_rejected_msg">We require the overlay permission to show the overlay :(</string>
+	<string name="no_image_selected">No Image Selected</string>
 </resources>
