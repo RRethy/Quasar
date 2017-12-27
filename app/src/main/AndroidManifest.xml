@@ -16,9 +16,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
-		<service android:name=".Services.OverlayService"/>
-
-		<service android:name=".Services.OverlayAccessibilityService"
+		<service android:name=".services.OverlayAccessibilityService"
 				 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
 			<intent-filter>
 				<action android:name="android.accessibilityservice.AccessibilityService"/>
@@ -27,6 +25,9 @@
 				android:name="android.accessibilityservice"
 				android:resource="@xml/accessibility_service_config" />
 		</service>
+
+		<service android:name=".services.OverlayService"/>
+
 		<activity android:name=".MainActivity"
 				  android:configChanges="orientation"
 				  android:screenOrientation="portrait">

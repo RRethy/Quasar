@@ -1,4 +1,4 @@
-package com.bonnetrouge.quasar.Services;
+package com.bonnetrouge.quasar.services;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -10,6 +10,7 @@ import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
@@ -21,8 +22,6 @@ import com.bonnetrouge.quasar.R;
 public class OverlayService extends Service {
 
     public static final int OVERLAY_REQUEST_CODE = 1815;
-
-    private boolean isDisabled = false;
 
     private final IBinder binder = new OverlayBinder();
 
@@ -70,6 +69,8 @@ public class OverlayService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Intent i = new Intent(this, OverlayService.class);
+        startService(i);
         return this.binder;
     }
 
@@ -83,8 +84,8 @@ public class OverlayService extends Service {
         this.params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
     }
@@ -126,8 +127,7 @@ public class OverlayService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(OverlayAccessibilityService.ACTION_DISABLE_FLOATING_VIDEO)) {
                 hideOverlay();
-            } else if (intent.getAction().equals(OverlayAccessibilityService.ACTION_ENABLE_FLOATING_VIDEO)
-                    && !isDisabled) {
+            } else if (intent.getAction().equals(OverlayAccessibilityService.ACTION_ENABLE_FLOATING_VIDEO)) {
                 showOverlay();
             }
         }

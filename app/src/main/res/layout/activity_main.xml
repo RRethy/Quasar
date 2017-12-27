@@ -30,6 +30,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="200dp"
 			android:layout_margin="8dp"
+			android:scaleType="centerCrop"
 			android:background="@android:color/white"
 			app:srcCompat="@drawable/ic_file_upload_black_24dp"/>
 

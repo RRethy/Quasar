@@ -1,4 +1,4 @@
-package com.bonnetrouge.quasar.Services;
+package com.bonnetrouge.quasar.services;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;

@@ -2,7 +2,6 @@ package com.bonnetrouge.quasar;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -14,13 +13,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bonnetrouge.quasar.Commons.Utility;
-import com.bonnetrouge.quasar.Services.OverlayAccessibilityService;
-import com.bonnetrouge.quasar.Services.OverlayService;
+import com.bonnetrouge.quasar.services.OverlayAccessibilityService;
+import com.bonnetrouge.quasar.services.OverlayService;
 
 import java.io.IOException;
 
@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap imgBitmap;
 
     private OverlayService service;
-
-    private boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 this.imgBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 previewImage.setImageBitmap(this.imgBitmap);
-                if (isBound) {
-                    passImageToService(this.imgBitmap);
-                }
+                showOverlay();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -162,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MainActivity.this.isBound = true;
             OverlayService.OverlayBinder binder = (OverlayService.OverlayBinder) service;
             MainActivity.this.service = binder.getService();
             if (MainActivity.this.imgBitmap != null) {
@@ -171,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
-            MainActivity.this.isBound = false;
-        }
+        public void onServiceDisconnected(ComponentName name) { }
     };
 }
