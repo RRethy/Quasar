@@ -13,7 +13,7 @@ This is a very simple Android app that uses a custom overlay to show any image o
 
 ## Check it out! ##
 
-
+<img src="https://github.com/RRethy/Quasar/blob/master/art/ss3.png" width="250" height="444" title="screenshot_1"> <img src="https://github.com/RRethy/Quasar/blob/master/art/ss1.png" width="250" height="444" title="screenshot_2"> <img src="https://github.com/RRethy/Quasar/blob/master/art/ss2.png" width="250" height="444" title="screenshot_3">
 
 ## Class Descriptions ##
 
