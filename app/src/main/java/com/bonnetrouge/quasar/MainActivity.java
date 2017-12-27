@@ -110,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         this.hideButton.setOnClickListener(view -> {
-            this.service.hideOverlay();
+            if (this.service != null) {
+                this.service.hideOverlay();
+            }
         });
     }
 
