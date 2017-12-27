@@ -1,9 +1,13 @@
 package com.bonnetrouge.quasar;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +29,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+
     @BindView(R.id.img_selection_view) CardView selectionView;
     @BindView(R.id.preview_image) ImageView previewImage;
     @BindView(R.id.show_button) Button showButton;
@@ -35,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap imgBitmap;
 
-    private static final int PICK_IMAGE_REQUEST = 1;
+    private OverlayService service;
+
+    private boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 this.imgBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 previewImage.setImageBitmap(this.imgBitmap);
+                if (isBound) {
+                    passImageToService(this.imgBitmap);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         this.hideButton.setOnClickListener(view -> {
-            // Hide the overlay
+            // TODO: Hide the overlay
         });
     }
 
@@ -140,7 +151,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showOverlay() {
-/*        Intent intent = new Intent(MainActivity.this, OverlayService.class);
-        startService(intent);*/
+        Intent intent = new Intent(MainActivity.this, OverlayService.class);
+        bindService(intent, this.connection, Context.BIND_AUTO_CREATE);
     }
+
+    private void passImageToService(Bitmap bitmap) {
+        this.service.passImageToOverlay(bitmap);
+    }
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MainActivity.this.isBound = true;
+            OverlayService.OverlayBinder binder = (OverlayService.OverlayBinder) service;
+            MainActivity.this.service = binder.getService();
+            if (MainActivity.this.imgBitmap != null) {
+                passImageToService(MainActivity.this.imgBitmap);
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            MainActivity.this.isBound = false;
+        }
+    };
 }

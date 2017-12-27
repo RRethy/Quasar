@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -21,6 +23,8 @@ public class OverlayService extends Service {
     public static final int OVERLAY_REQUEST_CODE = 1815;
 
     private boolean isDisabled = false;
+
+    private final IBinder binder = new OverlayBinder();
 
     private WindowManager windowManager;
     private ImageView overlay;
@@ -41,6 +45,38 @@ public class OverlayService extends Service {
         setupBroadcastReceiver();
 
         return START_STICKY;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        onDestroy();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (overlay != null) {
+            if(overlay.getWindowToken() != null) {
+                windowManager.removeViewImmediate(overlay);
+            }
+        }
+        windowManager = null;
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return this.binder;
+    }
+
+    public void passImageToOverlay(Bitmap bitmap) {
+        if (this.overlay != null) {
+            this.overlay.setImageBitmap(bitmap);
+        }
     }
 
     private void setupLayoutParams() {
@@ -78,29 +114,10 @@ public class OverlayService extends Service {
         return this.overlay.getWindowToken() != null;
     }
 
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        onDestroy();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (overlay != null) {
-            if(overlay.getWindowToken() != null) {
-                windowManager.removeViewImmediate(overlay);
-            }
+    public class OverlayBinder extends Binder {
+        public OverlayService getService() {
+            return OverlayService.this;
         }
-        windowManager = null;
-        if (broadcastReceiver != null) {
-            unregisterReceiver(broadcastReceiver);
-        }
-    }
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
     private class OverlayBroadcastReceiver extends BroadcastReceiver {
