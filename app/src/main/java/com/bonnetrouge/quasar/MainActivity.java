@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         this.hideButton.setOnClickListener(view -> {
-            // TODO: Hide the overlay
+            this.service.onDestroy();
         });
     }
 
