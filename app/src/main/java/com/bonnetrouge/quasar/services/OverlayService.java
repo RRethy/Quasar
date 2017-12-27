@@ -90,13 +90,15 @@ public class OverlayService extends Service {
         params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
     }
 
-    private void showOverlay() {
+    public void showOverlay() {
+        Log.d("quman", "checking: adding overlay to windowmanager");
         if (!isShowing()) {
+            Log.d("quman", "adding overlay to windowmanager");
             this.windowManager.addView(this.overlay, this.params);
         }
     }
 
-    private void hideOverlay() {
+    public void hideOverlay() {
         if (isShowing()) {
             this.windowManager.removeViewImmediate(this.overlay);
         }

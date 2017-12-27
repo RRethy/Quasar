@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -53,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.service.onDestroy();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 this.imgBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 previewImage.setImageBitmap(this.imgBitmap);
-                showOverlay();
+                updateOverlayImage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,14 +106,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         this.hideButton.setOnClickListener(view -> {
-            this.service.onDestroy();
+            this.service.hideOverlay();
         });
     }
 
     private void requestAccessibilityPermission() {
         if (accessibilityDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("TODO")
+            builder.setMessage("We use accessibility to automatically hide and show the overlay appropriately for the best user experience.")
                     .setTitle("Auto-Disable");
             builder.setPositiveButton("enable", (dialog, id) -> {
                 Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     private void requestOverlayPermission() {
         if (overlayDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("TODO")
+            builder.setMessage("Please enable us to draw over apps so the overlay can be displayed.")
                     .setTitle("Display Overlay");
             builder.setPositiveButton("enable", (dialog, id) -> {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -147,12 +152,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showOverlay() {
-        Intent intent = new Intent(MainActivity.this, OverlayService.class);
-        bindService(intent, this.connection, Context.BIND_AUTO_CREATE);
+        if (this.service == null) {
+            Intent intent = new Intent(MainActivity.this, OverlayService.class);
+            bindService(intent, this.connection, Context.BIND_AUTO_CREATE);
+        } else {
+            this.service.showOverlay();
+        }
+        updateOverlayImage();
     }
 
-    private void passImageToService(Bitmap bitmap) {
-        this.service.passImageToOverlay(bitmap);
+    private void updateOverlayImage() {
+        if (this.service != null) {
+            this.service.passImageToOverlay(this.imgBitmap);
+        }
     }
 
     private ServiceConnection connection = new ServiceConnection() {
@@ -161,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             OverlayService.OverlayBinder binder = (OverlayService.OverlayBinder) service;
             MainActivity.this.service = binder.getService();
             if (MainActivity.this.imgBitmap != null) {
-                passImageToService(MainActivity.this.imgBitmap);
+                updateOverlayImage();
             }
         }
 
