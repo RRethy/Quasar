@@ -13,7 +13,7 @@ This is a very simple Android app that uses a custom overlay to show any image o
 
 ## Check it out! ##
 
-<img src="https://github.com/RRethy/GifHost/blob/master/ss3.png" width="250" height="444" title="screenshot_1"> <img src="https://github.com/RRethy/GifHost/blob/master/ss1.png" width="250" height="444" title="screenshot_2"> <img src="https://github.com/RRethy/GifHost/blob/master/ss2.png" width="250" height="444" title="screenshot_3">
+<img src="https://user-images.githubusercontent.com/21000943/34424927-64f6e526-ebf5-11e7-9d17-470e91c0d0b7.png" width="250" height="444" title="screenshot_1"> <img src="https://user-images.githubusercontent.com/21000943/34424930-66ada1ca-ebf5-11e7-9111-649bc011a4e6.png" width="250" height="444" title="screenshot_2"> <img src="https://user-images.githubusercontent.com/21000943/34424931-67681d84-ebf5-11e7-9aaa-67636d3c01e1.png" width="250" height="444" title="screenshot_3">
 
 ## Class Descriptions ##
 
