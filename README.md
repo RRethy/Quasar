@@ -7,6 +7,8 @@
 > Twinkle, twinkle, quasi-star,
 > How I wonder what you are.
 
+<img src="https://user-images.githubusercontent.com/21000943/34430280-6d5c8dd8-ec31-11e7-8264-828e6ee0cc34.png" title="ToonUp">
+
 ## Description ##
 
 This is a very simple Android app that uses a custom overlay to show any image off the users the phone as a filter/watermar on top of the screen. Accessibility is also used as a hack to automatically hide and show the overlay since Android won't let the user accept any permissions or change certain settings when there is an overlay showing due to security concerns.
