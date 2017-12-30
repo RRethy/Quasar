@@ -24,27 +24,18 @@ public class OverlayService extends Service {
 
     private final IBinder binder = new OverlayBinder();
 
-    private boolean shouldShow = false;
+    private boolean shouldShow = true;
 
     private WindowManager windowManager;
     private ImageView overlay;
     private WindowManager.LayoutParams params;
     private BroadcastReceiver broadcastReceiver;
 
+    @Nullable
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-
-        this.windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-
-        final LayoutInflater inflater = LayoutInflater.from(this);
-        this.overlay = (ImageView) inflater.inflate(R.layout.view_overlay, null, false);
-
-        setupLayoutParams();
-        showOverlay();
-        setupBroadcastReceiver();
-
-        return START_STICKY;
+    public IBinder onBind(Intent intent) {
+        setupOverlay();
+        return this.binder;
     }
 
     @Override
@@ -71,12 +62,15 @@ public class OverlayService extends Service {
         }
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        Intent i = new Intent(this, OverlayService.class);
-        startService(i);
-        return this.binder;
+    private void setupOverlay() {
+        this.windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        final LayoutInflater inflater = LayoutInflater.from(this);
+        this.overlay = (ImageView) inflater.inflate(R.layout.view_overlay, null, false);
+
+        setupLayoutParams();
+        showOverlay();
+        setupBroadcastReceiver();
     }
 
     public void passImageToOverlay(Bitmap bitmap) {

@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.service.onDestroy();
+        if (this.service != null) {
+            this.service.onDestroy();
+        }
     }
 
     @Override
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 this.imgBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                previewImage.setImageBitmap(this.imgBitmap);
+                this.previewImage.setImageBitmap(this.imgBitmap);
                 updateOverlayImage();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestAccessibilityPermission() {
-        if (accessibilityDialog == null) {
+        if (this.accessibilityDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage(R.string.accessibility_dialog_msg)
                     .setTitle(R.string.accessibility_dialog_title);
@@ -134,13 +136,13 @@ public class MainActivity extends AppCompatActivity {
                     requestOverlayPermission();
                 }
             });
-            accessibilityDialog = builder.create();
+            this.accessibilityDialog = builder.create();
         }
-        accessibilityDialog.show();
+        this.accessibilityDialog.show();
     }
 
     private void requestOverlayPermission() {
-        if (overlayDialog == null) {
+        if (this.overlayDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage(R.string.overlay_dialog_msg)
                     .setTitle(R.string.overlay_dialog_title);
@@ -153,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Toast.makeText(this, R.string.overlay_rejected_msg, Toast.LENGTH_SHORT).show();
             });
-            overlayDialog = builder.create();
+            this.overlayDialog = builder.create();
         }
-        overlayDialog.show();
+        this.overlayDialog.show();
     }
 
     private void showOverlay() {
@@ -165,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             this.service.enable();
             this.service.showOverlay();
+            updateOverlayImage();
         }
-        updateOverlayImage();
     }
 
     private void updateOverlayImage() {
