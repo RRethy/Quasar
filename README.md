@@ -33,6 +33,8 @@ This is the config for the accessibility service that tells Android what kind of
 
 ## TODO ##
 
+* Bugs:
+  * Messes up the back button for some reason, I suspect it's due to WindowManager.LayoutParams flags, but I can't pinpoint
 * Redo the UI, it was very rushed.
   * Change entire flow
   * Add blurred version of image to background of app
@@ -40,3 +42,4 @@ This is the config for the accessibility service that tells Android what kind of
   * Adjust filter intensity
   * Allow for use of preset colours
   * Maybe allow a blurred overlay
+* Use accessibility to allow user to select which apps on their phone have the overlay showing.
