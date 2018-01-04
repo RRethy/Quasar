@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -83,7 +84,9 @@ public class OverlayService extends Service {
         this.params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                        ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                        : WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
