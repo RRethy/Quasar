@@ -9,7 +9,7 @@
 
 <img src="https://user-images.githubusercontent.com/21000943/34430280-6d5c8dd8-ec31-11e7-8264-828e6ee0cc34.png" title="ToonUp">
 
-<a href="TODO" alt="Play Store Release"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="215" height="83" title="Play Store"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.bonnetrouge.quasar" alt="Play Store Release"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="215" height="83" title="Play Store"/></a>
 
 ## Description ##
 
