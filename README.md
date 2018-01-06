@@ -9,6 +9,8 @@
 
 <img src="https://user-images.githubusercontent.com/21000943/34430280-6d5c8dd8-ec31-11e7-8264-828e6ee0cc34.png" title="ToonUp">
 
+<a href="TODO" alt="Play Store Release"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="215" height="83" title="Play Store"/></a>
+
 ## Description ##
 
 This is a very simple Android app that uses a custom overlay to show any image off the users the phone as a filter/watermar on top of the screen. Accessibility is also used as a hack to automatically hide and show the overlay since Android won't let the user accept any permissions or change certain settings when there is an overlay showing due to security concerns.
@@ -17,7 +19,7 @@ This is a very simple Android app that uses a custom overlay to show any image o
 
 [See it in action on Youtube](https://youtu.be/_h-Ca2HfPSc)
 
-<img src="https://user-images.githubusercontent.com/21000943/34424927-64f6e526-ebf5-11e7-9d17-470e91c0d0b7.png" width="250" height="444" title="screenshot_1"> <img src="https://user-images.githubusercontent.com/21000943/34424930-66ada1ca-ebf5-11e7-9111-649bc011a4e6.png" width="250" height="444" title="screenshot_2"> <img src="https://user-images.githubusercontent.com/21000943/34424931-67681d84-ebf5-11e7-9aaa-67636d3c01e1.png" width="250" height="444" title="screenshot_3">
+<img src="https://user-images.githubusercontent.com/21000943/34636527-7c23761a-f271-11e7-8be2-8cd8e8f17509.png" width="250" height="444"> <img src="https://user-images.githubusercontent.com/21000943/34636523-7bcee5a0-f271-11e7-822d-8b7e54bcf947.png" width="250" height="444"> <img src="https://user-images.githubusercontent.com/21000943/34636522-7bbfe564-f271-11e7-87f8-886c9632c986.png" width="250" height="444"> <img src="https://user-images.githubusercontent.com/21000943/34636528-7c4028aa-f271-11e7-9be5-6dcad67fc5f1.png" width="250" height="444"> <img src="https://user-images.githubusercontent.com/21000943/34636529-7cbcdee0-f271-11e7-8f74-434592116798.png" width="250" height="444">
 
 ## Class Descriptions ##
 
